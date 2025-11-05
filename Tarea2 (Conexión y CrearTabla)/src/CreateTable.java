@@ -41,14 +41,13 @@ public class CreateTable {
 
             // Manejo de errores SQL
         } catch (SQLException e) {
-            muestraErrorSQL(e);
+            muestraErrorSQL(e); // Llamada a nuestro método de gestionar error SQL
 
             // Manejo de errores generales
         } catch (Exception e) {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-
     /**
      * Método para mostrar información detallada sobre los errores SQL
      * Muestra el mensaje, el estado SQL y el código de error del proveedor.

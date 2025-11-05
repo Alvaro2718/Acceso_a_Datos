@@ -6,9 +6,8 @@ import java.sql.Statement;
 
 public class Conector {
 
-    // --- Datos de conexión (ajústalos a tu base de datos real) ---
-    // private static final String URL =
-    // "jdbc:mysql://localhost:3306/phpmyadmin?useSSL=false&serverTimezone=UTC";
+    // --- Datos de conexión ---
+
     private static final String URL = "jdbc:mysql://localhost:3306/ut3";
 
     private static final String USER = "root";
@@ -21,7 +20,7 @@ public class Conector {
         try {
             // Intentar establecer la conexión con la base de datos
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ Conexión a la base de datos establecida correctamente.");
+            System.out.println("Conexión a la base de datos establecida correctamente.");
 
             // Llamamos a una función extra para demostrar que la conexión funciona
             ejecutarConsultaPrueba(connection);
@@ -36,9 +35,9 @@ public class Conector {
             if (connection != null) {
                 try {
                     connection.close();
-                    System.out.println("🔒 Conexión cerrada correctamente.");
+                    System.out.println("Conexión cerrada correctamente.");
                 } catch (SQLException ex) {
-                    System.out.println("⚠️ Error al cerrar la conexión: " + ex.getMessage());
+                    System.out.println("Error al cerrar la conexión: " + ex.getMessage());
                     ex.printStackTrace();
                 }
             }
