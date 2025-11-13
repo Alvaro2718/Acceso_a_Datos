@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="org.example.LlamadasEmitida" table="LLAMADAS_EMITIDAS">
+
+        <id name="codigoLlamada" column="CODIGO_LLAMADA" type="int">
+            <generator class="assigned" />
+        </id>
+
+        <property name="numeroLlamado" column="NUMERO_LLAMADO" type="int" />
+        <property name="duracionLlamada" column="DURACION_LLAMADA" type="int" />
+        <property name="importeLlamada" column="IMPORTE_LLAMADA" type="float" />
+        <property name="simLlamante" column="SIM_LLAMANTE" type="int" />
+
+    </class>
+</hibernate-mapping>
