@@ -14,7 +14,8 @@
         <property name="numeroLlamado" column="NUMERO_LLAMADO" type="int" />
         <property name="duracionLlamada" column="DURACION_LLAMADA" type="int" />
         <property name="importeLlamada" column="IMPORTE_LLAMADA" type="float" />
-        <property name="simLlamante" column="SIM_LLAMANTE" type="int" />
+        <property name="simLlamante" column="SIM_LLAMANTE" type= "int" insert="false" update="false"/>
+
 
     </class>
 </hibernate-mapping>
