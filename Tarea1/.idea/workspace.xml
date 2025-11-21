@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="de7d0c38-47b0-48d3-a801-13d3be9a8fbb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Conector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Conector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/Tarea2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea2/src/CreateTable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/Tarea3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea3/src/ConsultaSELECT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/Tarea4.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4/src/ConsultaPREPARED.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/Tarea5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea5/src/JDBCinsert.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/Tarea6.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea6/src/ModificarClientesResultSet.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="354mzTZv4ReGDDREP5Y0UJK16nf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="de7d0c38-47b0-48d3-a801-13d3be9a8fbb" name="Changes" comment="" />
+      <created>1762377983310</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762377983310</updated>
+    </task>
+    <servers />
+  </component>
+</project>
