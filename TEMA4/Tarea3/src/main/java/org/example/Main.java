@@ -4,47 +4,50 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.EntityNotFoundException;
 
-
+/**
+ *
+ * @author Alvaro Lozano
+ */
 public class Main {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
 
     public static void main(String[] args) {
 
-        //CrearNuevaLlamada();
+        // Crear nueva llamada
+        CrearNuevaLlamada();
 
-        //ConsultarRegistroExistente();
+        // Consultar registro con find() y getReference()
+        ConsultarRegistroExistente();
+        ConsultarRegistroConGetReference();
 
-        //ModificarRegistroExistente();
+        // Modificar registro existente
+        ModificarRegistroExistente();
 
-        //EliminarRegistroExistente(1000072);
+        // Eliminar registro recién creado
+        EliminarRegistroExistente(1000072);
 
+        // Gestión de estados: detach, clear, merge
         GestionEstados();
     }
 
-    /// ///////////////////////////////////
-
-    //Crear metodo para crear nueva llamada
+    /// /////////////////////////////////////////////////////////
+    // CREAR NUEVA LLAMADA
     public static Integer CrearNuevaLlamada() {
-        // EntityManager: Gestor que maneja las operaciones con la BD (UNO por operación)
         EntityManager em = emf.createEntityManager();
-
         EntityTransaction tx = null;
-
         Integer codigoGenerado = null;
-
         Integer simLlamante = 617478396;
-        //Bloque try-catch-finally
+
         try {
-            //1º Iniciamos una transacción
             tx = em.getTransaction();
             tx.begin();
-            //2º Creamos el objeto en estado transitorio (aquí es posible que necesiteis objetos de otro tipo de entidades)
+
             LlamadasEmitida nuevaLlamada = new LlamadasEmitida();
-            //3º configuramos la nueva llama
-            //Necesitamos primero obtener la tarjeta telefonica (FK)
-            //Suponemos que existe una tarjeta con NUMERO_SIM = 617478396
+
+            // Obtener tarjeta telefónica existente
             TarjetasTelefonica tarjeta = em.find(TarjetasTelefonica.class, simLlamante);
 
             if (tarjeta == null) {
@@ -53,15 +56,15 @@ public class Main {
                 tarjeta.setId(simLlamante);
 
                 Agente agente = em.find(Agente.class, 9);
-
                 if (agente == null) {
                     System.out.println("El agente con ID 9 no existe. Creando uno de ejemplo...");
                     agente = new Agente();
                     agente.setId(9);
                     agente.setNombreAgente("Agente Demo");
                     agente.setFraseClave("Clave123");
-                    em.persist(agente);
+                    em.persist(agente); // persist() estándar JPA, devuelve void
                 }
+
                 tarjeta.setCodigoAgenteAsociado(agente);
                 em.persist(tarjeta);
             }
@@ -72,270 +75,217 @@ public class Main {
             nuevaLlamada.setImporteLlamada(12.50f);
             nuevaLlamada.setId(1000072);
 
-            //4º usamos persist() para ese objeto
+            // persist() hace que el objeto pase de transitorio a persistente
             em.persist(nuevaLlamada);
 
-            //5º hacemos commit
+            // commit de la transacción
             tx.commit();
 
             codigoGenerado = nuevaLlamada.getId();
+            System.out.println("Nueva llamada creada con CODIGO_LLAMADA = " + codigoGenerado);
+
+            /* Nota:
+             * persist() es JPA estándar y devuelve void.
+             * save() es específico de Hibernate y devuelve la entidad guardada.
+             * Recomendación: usar persist() cuando trabajamos con JPA puro.
+             */
 
         } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-                System.err.println("Error: transacción revertida");
-            }
+            if (tx != null && tx.isActive()) tx.rollback();
             System.err.println("Error: " + e.getMessage());
-
         } finally {
             em.close();
-            System.out.println("EntityManager cerrado\n");
         }
+
         return codigoGenerado;
     }
 
-    /// //////////////////////////////////////////////////////////
-
+    /// /////////////////////////////////////////////////////////
+    // CONSULTAR CON find()
     private static void ConsultarRegistroExistente() {
         EntityManager em = emf.createEntityManager();
 
         try {
             int idBuscar = 1000072;
-
             System.out.println("1. Usando find():");
             LlamadasEmitida llamada1 = em.find(LlamadasEmitida.class, idBuscar);
 
             if (llamada1 != null) {
-                System.out.println("El numero llamado es: " + llamada1.getNumeroLlamado() +
-                        " \nEl Id es: "+ llamada1.getId() +
-                        " \nLa duración es: "+ llamada1.getDuracionLlamada() +
-                        " \nEl Importe es: "+  llamada1.getImporteLlamada() +
-                        " \nEl sim del llamante es: "+ llamada1.getSimLlamante());
+                System.out.println("Número llamado: " + llamada1.getNumeroLlamado() +
+                        "\nId: " + llamada1.getId() +
+                        "\nDuración: " + llamada1.getDuracionLlamada() +
+                        "\nImporte: " + llamada1.getImporteLlamada() +
+                        "\nSim del llamante: " + llamada1.getSimLlamante());
             } else {
                 System.out.println("Llamada no encontrada");
             }
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        } finally {
+            em.close();
         }
     }
 
-    /// ////////////////////////////////
-
-
-
-    public static void ModificarRegistroExistente() {
+    /// /////////////////////////////////////////////////////////
+    // CONSULTAR CON getReference()
+    private static void ConsultarRegistroConGetReference() {
         EntityManager em = emf.createEntityManager();
 
-        EntityTransaction tx = null;
         try {
-            tx = em.getTransaction();
-            tx.begin();
-            System.out.println("Transacción iniciada");
+            int idBuscar = 1000072;
+            System.out.println("2. Usando getReference():");
 
-            //1º Encontrar registro en la tabla y traerlo a Java
-            int idBuscar = 1000054;
-            System.out.println("1. Usando find()...");
-            LlamadasEmitida llamada1 = em.find(LlamadasEmitida.class, idBuscar);
+            // getReference devuelve un proxy; la consulta se ejecuta al acceder a los campos
+            LlamadasEmitida llamadaRef = em.getReference(LlamadasEmitida.class, idBuscar);
 
-            //2º Modificar el objeto
-            if (llamada1 != null) {
-                float importeAnterior = llamada1.getImporteLlamada();
-                System.out.println("El importe anterior es: " + importeAnterior);
+            // Acceso a campos dispara SELECT
+            System.out.println("Número llamado: " + llamadaRef.getNumeroLlamado());
+            System.out.println("Duración: " + llamadaRef.getDuracionLlamada());
+            System.out.println("Importe: " + llamadaRef.getImporteLlamada());
 
-                //Modificamos el objeto en memoria
-                float nuevoImporte = importeAnterior *1.10f; //Incremento del 10%
-                llamada1.setImporteLlamada(nuevoImporte ); //tambíen valdría llamada1.setImporteLlamada(nuevoImporte + 0.1f);
-                System.out.println("El nuevo importe de la llamda es: " + nuevoImporte); //Para mosrar el nuevo importe
-            } else {
-                System.out.println("Llamada no encontrada");
-            }
-
-            //3º Hacer el commit
-            tx.commit();
-
+        } catch (EntityNotFoundException enf) {
+            System.out.println("Registro con ID " + 1000072 + " no existe (EntityNotFoundException).");
         } catch (Exception e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-                System.err.println("Rollback ejecutado");
-            }
-            System.err.println("Causa: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         } finally {
             em.close();
         }
 
+        /* Nota:
+         * find() ejecuta la consulta inmediatamente y devuelve null si no existe.
+         * getReference() devuelve un proxy, y lanza EntityNotFoundException si no existe al acceder a campos.
+         */
     }
 
-    /// ///////////////////////////////////////
-
-    public static void EliminarRegistroExistente(int codigoLlamada) {
-        System.out.println("Eliminando llamada con ID = "+ codigoLlamada + "\n");
+    /// /////////////////////////////////////////////////////////
+    // MODIFICAR REGISTRO
+    public static void ModificarRegistroExistente() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = null;
-        try {
 
+        try {
             tx = em.getTransaction();
             tx.begin();
-            System.out.println("Transcción iniciada");
 
-            //Recuperamos (buscamos) el objeto que queremos eliminar de la tabla
-            System.out.println("Recuperamos el objeto con find()...");
-            LlamadasEmitida llamada = em.find(LlamadasEmitida.class, codigoLlamada);
-                    if(llamada != null) {
+            int idBuscar = 1000054;
+            LlamadasEmitida llamada1 = em.find(LlamadasEmitida.class, idBuscar);
 
-                        //Eliminar con remove()
-                        System.out.println("Objeto recuperado en estado PERSISTENTE, eliminando...");
-                        em.remove(llamada);
-
-                        //Realizar el conmit
-                        System.out.println("\n Ejecutando commit()...");
-                        tx.commit();
-
-                    }else{
-                        System.out.println("Llamada no encontrada o el Objeto no existe");
-                    }
-
-        }catch (Exception e) {
-            System.out.println("Error al eliminar un registro");
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
+            if (llamada1 != null) {
+                float importeAnterior = llamada1.getImporteLlamada();
+                float nuevoImporte = importeAnterior * 1.10f;
+                llamada1.setImporteLlamada(nuevoImporte);
+                System.out.println("Importe actualizado de la llamada: " + nuevoImporte);
+            } else {
+                System.out.println("Llamada no encontrada");
             }
-            System.out.println("Error: " + e.getMessage());
-        }finally {
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) tx.rollback();
+            System.err.println("Rollback ejecutado: " + e.getMessage());
+        } finally {
             em.close();
         }
     }
 
-    /// //////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////
+    // ELIMINAR REGISTRO
+    public static void EliminarRegistroExistente(int codigoLlamada) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = null;
 
-    public static void GestionEstados(){
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+
+            LlamadasEmitida llamada = em.find(LlamadasEmitida.class, codigoLlamada);
+            if (llamada != null) {
+                em.remove(llamada);
+                tx.commit();
+                System.out.println("Registro eliminado correctamente");
+            } else {
+                System.out.println("Llamada no encontrada o el objeto no existe");
+            }
+
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) tx.rollback();
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    /// /////////////////////////////////////////////////////////
+    // GESTIÓN DE ESTADOS
+    public static void GestionEstados() {
         System.out.println("--- PASO 6: GESTIÓN DE ESTADOS ---");
 
-        // A) DETACH - Disociar una entidad especifíca
         System.out.println("A) Disociar con detach():");
         apartado_Detach(1000054);
 
-        // B) CLEAR - Disociar TODAS  las entidades
-        System.out.println("B) Disociar con eliminar():");
+        System.out.println("B) Disociar con clear():");
         apartado_Clear(1000071);
 
-        // C) MERGE - Reasociar una entidad disociada
+        System.out.println("C) Reasociar con merge():");
         apartado_Merge();
-
     }
 
-    private static void apartado_Detach(int codigoLlamada){
+    private static void apartado_Detach(int codigoLlamada) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        try{
-            //INICIAMOS TRANSACCIÓN
+        try {
             tx.begin();
-            System.out.println("Transacción iniciada (DETACH)");
-
-            //1. Obtenemos la llamada --> estado PERSISTENTE
             LlamadasEmitida llamada = em.find(LlamadasEmitida.class, codigoLlamada);
-
-            if(llamada != null){
-
-                System.out.println("Objeto encontrado. Estado PERSISTENTE");
-
-                //2. Lo pasamos a estado DETACHED
+            if (llamada != null) {
                 em.detach(llamada);
-                System.out.println("Objeto cambiado a estado DETACHED");
-
-                //3. Modificar el importe estando DETACHED
-                float importeAnterior = llamada.getImporteLlamada();
-                llamada.setImporteLlamada(importeAnterior + 5);
-                System.out.println("Importe cambiado en memoria local, no se guardara en la base de datos");
-
-            }else{
-                System.out.println("No existe el registro con ID" + codigoLlamada);
-            }
-
-            tx.commit(); // NO guarda no guarda los cambios del objeto DETACHED
-
-
-
-
-
-        }catch(Exception e){
-
-
-        }finally{
-            em.close();
-        }
-    }
-
-    private static void apartado_Clear(int codigoLlamada){
-
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        try{
-            tx.begin();
-            System.out.println("Transacción iniciada (CLEAR)");
-
-            //1. Obtenemos una llamada culaquiera
-            LlamadasEmitida llamada = em.find(LlamadasEmitida.class, codigoLlamada);
-
-            if(llamada != null){
-                System.out.println("Objeto encontrado. Estado PERSISTENTE");
-
-                //2. Desasociamos TODAS las entidades
-                em.clear();
-                System.out.println("EntityManager limpiado. Todas las entidades pasan a DETACHED.");
-
-
-                //3. Intentamos modificarla
-                float importeAnterior = llamada.getImporteLlamada();
-                llamada.setImporteLlamada(importeAnterior + 10);
-                System.out.println("Importe cambiado en memoria (NO SE GUARDA EN LA BD");
-            }else{
-                System.out.println("No existe el registro con ID: " + codigoLlamada);
+                llamada.setImporteLlamada(llamada.getImporteLlamada() + 5);
+                System.out.println("Objeto en DETACHED modificado en memoria (NO guardado en BD)");
             }
             tx.commit();
-        }catch(Exception e){
-
-
-        }finally{
+        } finally {
             em.close();
         }
-
-
     }
 
-    private static void apartado_Merge(){
+    private static void apartado_Clear(int codigoLlamada) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
 
+        try {
+            tx.begin();
+            LlamadasEmitida llamada = em.find(LlamadasEmitida.class, codigoLlamada);
+            if (llamada != null) {
+                em.clear();
+                llamada.setImporteLlamada(llamada.getImporteLlamada() + 10);
+                System.out.println("Objeto modificado en memoria tras clear() (NO guardado en BD)");
+            }
+            tx.commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    private static void apartado_Merge() {
         System.out.println("=== REASOCIAR CON MERGE ===");
 
-        // Recuperamos un objeto DETACHED desde la BD
         EntityManager em1 = emf.createEntityManager();
         LlamadasEmitida llamadaDetached = em1.find(LlamadasEmitida.class, 1000054);
-        em1.close(); // <-- al cerrar, pasa a DETACHED
+        em1.close();
 
-        // Lo modificamos mientras está DETACHED
         if (llamadaDetached != null) {
-            float importeAnterior = llamadaDetached.getImporteLlamada();
-            llamadaDetached.setImporteLlamada(importeAnterior + 20);
-            System.out.println("Objeto modificado en estado DETACHED.");
+            llamadaDetached.setImporteLlamada(llamadaDetached.getImporteLlamada() + 20);
+            System.out.println("Objeto modificado en DETACHED.");
         }
 
-        // ---- Realizamos el MERGE ----
         EntityManager em2 = emf.createEntityManager();
         EntityTransaction tx = em2.getTransaction();
 
         try {
             tx.begin();
-
-            // merge devuelve una COPIA PERSISTENTE DEL OBJETO
             LlamadasEmitida entidadPersistente = em2.merge(llamadaDetached);
-
-            System.out.println("Entidad reasociada con merge(). Estado PERSISTENTE nuevamente.");
-
+            System.out.println("Entidad reasociada con merge(), estado PERSISTENTE.");
             tx.commit();
-            System.out.println("Cambios guardados correctamente.");
-
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
             System.out.println("Error en merge(): " + e.getMessage());
@@ -343,8 +293,4 @@ public class Main {
             em2.close();
         }
     }
-
-
 }
-
-
