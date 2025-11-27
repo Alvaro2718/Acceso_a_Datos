@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c7de3e-3043-449b-9b55-69a9ae7f883e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../Tarea2/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea2/out/production/Tarea2/CreateTable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea3/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea3/out/production/Tarea3/ConsultaSELECT.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea4/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea4/out/production/Tarea4/ConsultaPREPARED.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea5/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea5/out/production/Tarea5/JDBCinsert.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea6/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Tarea6/out/production/Tarea6/ModificarClientesResultSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Tema4/Tarea1/Tarea1_Configuracion/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Tema4/Tarea1/Tarea1_Configuracion/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,15 +23,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
