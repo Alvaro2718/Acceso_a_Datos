@@ -26,10 +26,13 @@ public class GestionLlamadas {
 
 
             // CONSULTA SIMPLE JPQL
-            System.out.println("\n--- APARTADO 3: Consulta simple con JPQL Nativo --- ");
+            System.out.println("\n--- APARTADO 3: Consulta simple con JPQL --- ");
             consultaSimpleJPQL();
 
             // CONSULTA FILTRADA JPQL
+            System.out.println("\n--- APARTADO 4: Consulta Filtrada con JPQL --- ");
+            consultaFiltradaJPQL();
+
 
 
 
@@ -53,7 +56,7 @@ public class GestionLlamadas {
         System.out.println("\nListado de TODAS las llamadas emitidas:\n");
 
         try {
-            String sql = "SELECT * FROM LLAMADAS_EMITIDAS";
+            String sql = "SELECT SIM_LLAMANTE, NUMERO_LLAMADO, IMPORTE_LLAMADA \nFROM LLAMADAS_EMITIDAS";
             Query query = em.createNativeQuery(sql);
 
             List<Object[]> resultados = query.getResultList();
@@ -64,16 +67,11 @@ public class GestionLlamadas {
             }
 
             for (Object[] fila : resultados) {
-                int codigoLlamada = (Integer) fila[0];
-                int simLlamante = (Integer) fila[1];
-                int numeroLlamado = (Integer) fila[2];
-                int duracion = (Integer) fila[3];
-                float importe = (Float) fila[4];
+                int numeroSIM = (Integer) fila[0];
+                int numeroLlamado = (Integer) fila[1];
+                float importe = (Float) fila[2];
 
-                System.out.printf(
-                        "| %-8d | %-12d | %-13d | %-8d | %8.2f € |%n",
-                        codigoLlamada, simLlamante, numeroLlamado, duracion, importe
-                );
+                System.out.printf("| %-12d | %-13d | %8.2f € |%n", numeroSIM, numeroLlamado, importe);
             }
 
             System.out.println("\nTotal de registros: " + resultados.size());
@@ -134,46 +132,83 @@ public class GestionLlamadas {
     }
 
     /// /////// METODO APARTADO 3: CONSULTA SIMPLE JPQL
-    private static void consultaSimpleJPQL(){
-        EntityManager em = emf.createEntityManager();
-        System.out.println("\nListado de TODAS las llamadas emitidas (USANDO JPQL):\n" );
+    private static void consultaSimpleJPQL() {
+    EntityManager em = emf.createEntityManager();
+    System.out.println("\nListado de TODAS las llamadas emitidas (USANDO JPQL):\n");
 
-        try {
-            String jsql = "SELECT l FROM LlamadasEmitida l";
-            Query query = em.createNativeQuery(jsql);
+    try {
+        // JPQL usa el nombre de la entidad/clase, NO el nombre de la tabla
+        String jpql = "SELECT l FROM LlamadasEmitida l";
 
-            //Paso 2: Ejecutar la consulta y obtener resultados
-            List<LlamadasEmitida> resultados = query.getResultList();
+        // Se usa createQuery(), NO createNativeQuery()
+        Query query = em.createQuery(jpql, LlamadasEmitida.class);
 
-            //Paso 3: Verificar si hay resultados
-            if(resultados.isEmpty()){
-                System.out.println("No se encontro llamadas en la base de datos.");
-                return;
-            }
+        // Recibimos entidades, no Object[]
+        List<LlamadasEmitida> resultados = query.getResultList();
 
-            //Paso 5: Iterar sobre cada objeto LlamadasEmitidas
-            for(LlamadasEmitida llamada : resultados){
-                int codigoLlamada = llamada.getId();
-                //int simLlamante =  llamada.getSimLlamante();
-                int numeroLlamado =  llamada.getNumeroLlamado();
-                int duracion = llamada.getDuracionLlamada();
-                float importe =  llamada.getImporteLlamada();
-
-                System.out.printf(
-                        "| %-8d | %-13d | %-8d | %8.2f € |%n",
-                        codigoLlamada, numeroLlamado, duracion, importe);
-            }
-        }catch (Exception e){
-            System.err.println("Error al ejecutar la consulta filtrada: " + e.getMessage());
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
+        if (resultados.isEmpty()) {
+            System.out.println("No se encontraron llamadas.");
+            return;
         }
+
+        for (LlamadasEmitida llamada : resultados) {
+            int codigoLlamada = llamada.getId();
+            // Profesor quiere ver navegación a la FK como objeto:
+            int numeroSIM = llamada.getSimLlamante().getId();
+            int numeroLlamado = llamada.getNumeroLlamado();
+            int duracion = llamada.getDuracionLlamada();
+            float importe = llamada.getImporteLlamada();
+
+            System.out.printf(
+                    "| %-8d | %-12d | %-13d | %-8d | %8.2f € |%n",
+                    codigoLlamada, numeroSIM, numeroLlamado, duracion, importe
+            );
+        }
+
+        System.out.println("\nTotal de registros: " + resultados.size());
+
+    } catch (Exception e) {
+        System.err.println("Error en JPQL: " + e.getMessage());
+    } finally {
+        em.close();
     }
+}
 
 
     /// ////////// METODO 4: CONSULTA FILTRADA CON JPQL
+    private static void consultaFiltradaJPQL() {
+        EntityManager em = emf.createEntityManager();
+        System.out.println("\nLlamadas con importe MENOR a 300 € (USANDO JPQL):\n");
+
+        try {
+            String jpql = "SELECT l FROM LlamadasEmitida l WHERE l.importeLlamada < 300";
+            Query query = em.createQuery(jpql, LlamadasEmitida.class);
+
+            List<LlamadasEmitida> resultados = query.getResultList();
+
+            if (resultados.isEmpty()) {
+                System.out.println("No hay llamadas con importe menor a 300 €.");
+                return;
+            }
+
+            for (LlamadasEmitida llamada : resultados) {
+                System.out.printf(
+                        "| Llamada: %-5d | SIM: %-10d | Número: %-10d | Importe: %6.2f € |%n",
+                        llamada.getId(),
+                        llamada.getSimLlamante().getId(),
+                        llamada.getNumeroLlamado(),
+                        llamada.getImporteLlamada()
+                );
+            }
+
+            System.out.println("\nTotal de llamadas filtradas: " + resultados.size());
+
+        } catch (Exception e) {
+            System.err.println("Error en JPQL filtrado: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
 
 
 }
