@@ -28,5 +28,4 @@ public class TarjetasTelefonica {
     public void setCodigoAgenteAsociado(Agente codigoAgenteAsociado) {
         this.codigoAgenteAsociado = codigoAgenteAsociado;
     }
-
 }
