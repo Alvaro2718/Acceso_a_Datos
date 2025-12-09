@@ -1,38 +1,41 @@
 import jakarta.persistence.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Pedido {
 
-
     @Id
-    @GeneratedValue
-    private String codigo;
-    private long idCliente;
-    private List<Producto> productos;
+    private String codigo;      // Código del pedido
+
+    private Long idCliente;     // ID del cliente
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Producto> productos = new ArrayList<>();
 
     public Pedido() {}
 
-    public Pedido( long idCliente, List<Producto> productos) {
+    public Pedido(String codigo, Long idCliente, List<Producto> productos) {
+        this.codigo = codigo;
         this.idCliente = idCliente;
         this.productos = productos;
     }
 
-    public String getCodigo() {return this.codigo;}
-    public void setCodigo(String codigo) {this.codigo = codigo;}
-
-    public long getIdCliente() {return this.idCliente;}
-    public void setIdCliente(long idCliente) {this.idCliente = idCliente;}
-
-    public List<Producto> getProductos() {return this.productos;}
-    public void setProductos(List<Producto> productos) {this.productos = productos;}
-
     @Override
-    public String toString() {return (" \n" + codigo +"\n"+ idCliente +"\n"+ productos);}
+    public String toString() {
+        return "Pedido{" +
+                "codigo='" + codigo + '\'' +
+                ", idCliente=" + idCliente +
+                ", productos=" + productos +
+                '}';
+    }
 
+    public  String getCodigo() {return codigo;}
+    public void setCodigo(String codigo) { this.codigo = codigo;}
 
+    public Long getIdCliente() {return idCliente;}
+    public void setIdCliente(Long idCliente) {this.idCliente = idCliente;}
 
-
-
+    public List<Producto> getProductos() {return productos;}
+    public void setProductos(List<Producto> productos) {this.productos = productos;}
 }

@@ -12,61 +12,93 @@ public class PedidosApp {
     private static EntityManager em;
     private static Scanner sc = new Scanner(System.in);
 
+    private static List<Producto> productosDisponibles = new ArrayList<>();
+
     public static void main(String[] args) {
 
-        emf = Persistence.createEntityManagerFactory("C:\\objectdb-2.9.4\\db\\InventarioObjetosCompuestos.odb");
+        emf = Persistence.createEntityManagerFactory("C:\\objectdb-2.9.4\\db\\PedidosODB.odb");
         em = emf.createEntityManager();
 
+        crearProductosIniciales();
 
+        System.out.println("\n=== CREACIÓN DE PEDIDOS ===");
+        guardarPedido();
 
         em.close();
         emf.close();
     }
 
-
-    private static void añadirPedido() {
-        System.out.println("\n--- Añadir Producto ---");
-
-        List<Producto> productos = new ArrayList<>();
-        Producto producto = new Producto( "Oro", 32, 32);
-
-        Pedido pedido = new Pedido(4, productos);
-
+    private static void crearProductosIniciales() {
         em.getTransaction().begin();
-        em.persist(producto);
+
+        Producto p1 = new Producto("Consola X", 499.99, 12);
+        Producto p2 = new Producto("Juego Z", 59.99, 50);
+        Producto p3 = new Producto("Teclado Mecánico", 89.99, 20);
+
+        em.persist(p1);
+        em.persist(p2);
+        em.persist(p3);
+
+        productosDisponibles.add(p1);
+        productosDisponibles.add(p2);
+        productosDisponibles.add(p3);
+
         em.getTransaction().commit();
 
-        System.out.println("Producto añadido correctamente.");
+        System.out.println("\nProductos cargados correctamente.");
     }
 
-    private static void listarPedidos() {
-        System.out.println("\n--- Lista de Productos ---");
+    private static void mostrarProductos() {
+        System.out.println("\n--- PRODUCTOS DISPONIBLES ---");
 
-        List<Producto> productos = em
-                .createQuery("SELECT p FROM Producto p", Producto.class)
-                .getResultList();
-
-        if (productos.isEmpty()) {
-            System.out.println("No hay productos en el inventario.");
-            return;
+        for (int i = 0; i < productosDisponibles.size(); i++) {
+            System.out.println((i + 1) + " - " + productosDisponibles.get(i));
         }
-
-        productos.forEach(System.out::println);
     }
 
-    private static void buscarPedidoPorNombre() {
-        System.out.print("\nIngrese el nombre del producto a buscar: ");
-        String nombre = sc.nextLine();
+    private static void guardarPedido() {
 
-        List<Producto> productos = em.createQuery(
-                        "SELECT p FROM Producto p WHERE p.nombre LIKE :n", Producto.class)
-                .setParameter("n", "%" + nombre + "%")
-                .getResultList();
+        System.out.print("\nCódigo del pedido: ");
+        String codigo = sc.nextLine();
 
-        if (productos.isEmpty()) {
-            System.out.println("No se encontró ningún producto con ese nombre.");
-        } else {
-            productos.forEach(System.out::println);
-        }
+        System.out.print("ID del cliente: ");
+        Long idCliente = sc.nextLong();
+        sc.nextLine();
+
+        mostrarProductos();
+
+        List<Producto> seleccionados = new ArrayList<>();
+        String opcion;
+
+        do {
+            System.out.print("\nSeleccione un número de producto (o 'fin' para terminar): ");
+            opcion = sc.nextLine();
+
+            if (!opcion.equalsIgnoreCase("fin")) {
+                try {
+                    int indice = Integer.parseInt(opcion) - 1;
+
+                    if (indice >= 0 && indice < productosDisponibles.size()) {
+                        seleccionados.add(productosDisponibles.get(indice));
+                        System.out.println("Producto añadido.");
+                    } else {
+                        System.out.println("Índice no válido.");
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida.");
+                }
+            }
+
+        } while (!opcion.equalsIgnoreCase("fin"));
+
+        Pedido pedido = new Pedido(codigo, idCliente, seleccionados);
+
+        em.getTransaction().begin();
+        em.persist(pedido);
+        em.getTransaction().commit();
+
+        System.out.println("\nPedido guardado correctamente:");
+        System.out.println(pedido);
     }
 }
