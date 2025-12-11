@@ -49,7 +49,10 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%d, %s, %.2f, %d", ID, nombre, precio, stock);
+        return "Producto \nID= "+ ID +
+                "\nNombre: "+nombre +
+                "\nPrecio: "+ precio +
+                "\nStock: " + stock ;
     }
 }
 
