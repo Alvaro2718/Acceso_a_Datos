@@ -5,7 +5,7 @@ import java.util.*;
 
 public class PedidoApp {
 
-    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("C:/objectdb-2.9.4/dbInventarioODB");
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("InventarioPU");
     static EntityManager em = emf.createEntityManager();
     static Scanner sc = new Scanner(System.in);
 
@@ -81,7 +81,7 @@ public class PedidoApp {
 
         System.out.println("ID del Cliente: ");
         Long idCliente = Long.parseLong(sc.nextLine());
-        sc.nextLine();
+
 
         Pedido pedido = new Pedido(codigo, idCliente, new ArrayList<>());
 
@@ -123,7 +123,8 @@ public class PedidoApp {
         Producto p = new Producto(nombre, precio, stock);
 
         em.getTransaction().begin();
-        em.persist(p);
+        pedido.getProductos().add(p); //Añadir el producto al pedido
+        em.persist(pedido);
         em.getTransaction().commit();
         System.out.println("Producto creado.");
 
