@@ -1,4 +1,4 @@
-package org.example;
+
 
 import javax.xml.xquery.XQDataSource;
 import javax.xml.xquery.XQConnection;
@@ -8,7 +8,7 @@ import javax.xml.xquery.XQResultSequence;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class ConsultaProfesores {
+public class ConsultaProfesoresXQJ {
 
     public static void main(String[] args) {
 
@@ -49,7 +49,7 @@ public class ConsultaProfesores {
             // Aquí localizo el documento JesusLozano.xml dentro de /db/Formacion/Profesores
             // y saco todos sus datos (el documento completo).
             String xquery =
-                    "doc('/db/Formacion/Profesores/JesusLozano.xml')";
+                    "doc('/base de datos/Formación/Profesores/JesúsLozano.xml')";
 
             // Si en lugar del documento completo quieres campos concretos, por ejemplo:
             // String xquery = "doc('/db/Formacion/Profesores/JesusLozano.xml')/profesor/nombre/text()";
@@ -105,4 +105,3 @@ public class ConsultaProfesores {
         }
     }
 }
-

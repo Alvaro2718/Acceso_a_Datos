@@ -5,19 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43123fbf-6eed-4003-b6a2-acd652ce0702" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Tarea3_Tema6/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea3_Tema6/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea3_Tema6/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea3_Tema6/src/main/java/org/example/GestionDocumentosExist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea3_Tema6/src/test/java/org/example/AppTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/src/test/java/org/example/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/libraries/exist_xqj_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/Tarea4_Tema6.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6/src/ConsultaProfesoresXQJ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/src/main/java/org/example/ConsultaProfesoresXQJ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tarea4_Tema6_Maven/src/test/java/org/example/AppTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GestionColeccionesExist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GestionColeccionesExist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Tarea4_Tema6/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/src/main/java/org/example/ConsultaProfesores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tarea4_Tema6/src/test/java/org/example/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768909502306</updated>
       <workItem from="1768909503251" duration="3945000" />
-      <workItem from="1768992665038" duration="1315000" />
+      <workItem from="1768992665038" duration="4421000" />
     </task>
     <servers />
   </component>
