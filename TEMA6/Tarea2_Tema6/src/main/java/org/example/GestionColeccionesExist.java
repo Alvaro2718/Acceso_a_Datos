@@ -15,7 +15,7 @@ public class GestionColeccionesExist {
     // URI: apunto directamente a la colección /db/Formacion, que será la colección padre
     // USER y PASS: credenciales de acceso a la base de datos
     private static final String DRIVER = "org.exist.xmldb.DatabaseImpl";
-    private static final String URI = "xmldb:exist://localhost:8080/exist/xmlrpc/db/Formacion";
+    private static final String URI = "xmldb:exist://localhost:8080/exist/xmlrpc/db";
     private static final String USER = "admin";
     private static final String PASS = "";
 
@@ -37,7 +37,7 @@ public class GestionColeccionesExist {
             // A partir de este momento ya puedo pedir colecciones a la base de datos
             DatabaseManager.registerDatabase(database);
 
-            // PASO 4: Obtener la colección padre /db/Formacion
+            // PASO 4: Obtener la colección padre /db
             formacionCol = DatabaseManager.getCollection(URI, USER, PASS);
 
             // Compruebo que la colección exista realmente
