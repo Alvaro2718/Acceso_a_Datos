@@ -66,6 +66,8 @@ public class GestionColeccionesExist {
             crearColeccionSiNoExiste(formacionCol, cms, "Alumnos");
             crearColeccionSiNoExiste(formacionCol, cms, "Error");
 
+
+
             // PASO 6 (segunda parte): Eliminar la colección Error recién creada
             // Esto sirve para comprobar también el borrado de colecciones
             eliminarColeccionSiExiste(formacionCol, cms, "Error");

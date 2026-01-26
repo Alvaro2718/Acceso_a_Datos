@@ -1,15 +1,17 @@
+package org.example;
+
 import org.exist.xmldb.DatabaseImpl;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 
-public class TestExistConnection {
+public class App {
 
     // URI de conexión a eXistDB usando XML-RPC.
     // En este caso apunto directamente a la colección raíz /db,
     // tal y como se indica en el enunciado del ejercicio.
-    private static final String URI = "xmldb:exist://localhost:8080/exist/xmlrpc/db";
+    private static final String URI = "xmldb:exist://localhost:8080/exist/xmlrpc/db/Formacion";
 
     // Credenciales de acceso a la base de datos.
     // Uso el usuario administrador para poder acceder a todas las colecciones.
@@ -51,9 +53,18 @@ public class TestExistConnection {
             // 4) Obtengo las subcolecciones que cuelgan de la colección raíz.
             // Este método devuelve un array de Strings con los nombres de las colecciones.
             String[] subCollections = rootCollection.listChildCollections();
+            /**
+             * Para una consulta más amplia y entrar a los documentos dentro de las colleciones sería:
+             *             String[] resources = rootCollection.listResources();
+             *             System.out.println("Documentos en la colección:");
+             *
+             *              for (String res : resources) {
+             *              System.out.println("  " + res);}
+             *
+             */
 
-            System.out.println("Subcolecciones en /db:");
 
+            System.out.println("Subcolecciones en /db/Formacion:");
 
             // Si no hay subcolecciones, lo indico por consola.
             if (subCollections == null || subCollections.length == 0) {
@@ -61,7 +72,7 @@ public class TestExistConnection {
             } else {
                 // Recorro el array y muestro cada subcolección encontrada.
                 for (String col : subCollections) {
-                    System.out.println("  /db/" + col);
+                    System.out.println("  /db/Formacion: " + col);
                 }
             }
 
@@ -102,3 +113,4 @@ public class TestExistConnection {
         }
     }
 }
+
